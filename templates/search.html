@@ -1,0 +1,66 @@
+{%extends 'index.html'%}
+{%load static%}
+{%block content%}
+{%if post%}
+<div class="container">
+<div class="row">
+{%for i in post%}
+<div class="col-md-8 mx-auto">
+    <div class="card mdb-color bg-light text-center z-depth-2 shadow" >
+        <div class="card-body">
+          <div class="card-header">{{i.username}}</div><div class="card-header">{{i.datetime}}</div>
+          <div class="card-title">{{i.title}}</div>
+          <div class="card-genre">{{i.genre}}</div>
+          <img src="/media/{{i.img}}" alt="" height="200px" width="80%" >
+          <a href="/view_post/{{i.id}}" class="btn btn-warning" style="width:100%">View This Post</a>
+            <button onclick="desc('{{i.id}}')"id="kash{{i.id}}" class="btn btn-info" style="width:100%">View Full Post</button>
+            <span style="display: none;" id="{{i.id}}"><p class="white-text mb-0">{{i.description}}</p></span>
+            
+          <form action="" method="post">
+            {%csrf_token%}
+            <input type="button" onclick="show('{{i.id}}','{{i.username}}')"id="show1{{i.id}}" value="Show Comments"class="btn btn-success">
+          </form>
+          <div id="mishi{{i.id}}">
+            <div class="panel panel-info">
+              <div class="panel-body" id="p{{i.id}}"style="display:none">
+                <div class="panel-heading">
+                  Comment panel
+              </div>
+                <form action="" method="post">
+                  {%csrf_token%}
+                  <input class="form-control"id="kashish{{i.id}}" name="msg"rows="3"type="text"placeholder="write a comment...">
+                  <input class="btn btn-info pull-right"type="button" onclick="comment('{{i.id}}','{{request.session.email_id}}','{{i.username}}')" value="Post">
+                </form>
+                  <div class="clearfix" id="mishra{{i.id}}"></div>
+                  <hr>
+                  <ul class="media-list" id="mediaa{{i.id}}">
+                      <!-- <li class="media">
+                          <a href="#" class=""mx-auto>
+                              <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
+                          </a>
+                          <div class="media-body">
+                              <span class="text-muted pull-right">
+                                  <small class="text-muted">30 min ago</small>
+                              </span>
+                              <h5 class="text-success pull-left">@MartinoMont</h5>
+                              <li class="list-item pull-left">
+                                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                  Lorem ipsum dolor sit amet,
+                              </li>
+                          </div>
+                      </li> -->
+                  </ul>
+              </div>
+          </div>
+          </div>
+          </div>
+    </div>
+</div>
+{%endfor%}
+</div>
+
+</div>
+{%else%}
+<h4>bhaiya humare paas kuch naa h </h4>
+{%endif%}
+{%endblock%}

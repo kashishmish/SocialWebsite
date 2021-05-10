@@ -1,0 +1,54 @@
+{%extends 'index.html'%}
+{%load static%}
+{%block content%}
+{%if name%}
+<div class="container">
+<div class="row">
+            
+                
+    <div class="col-md-12"></div>
+    <div class="people-nearby">
+        {% for i in name %}
+      
+      <div class="nearby-user">
+        
+        <div class="row">
+            
+          <div class="col-md-2 col-sm-2">
+            {%if i.img%}
+                <img src="/media/{{i.img}}" alt="user" height="100px" width="100%" class="profile-photo-lg">
+            {%else%}
+                <img src="/media/download.png" alt="hello" height="100px" width="100%" class="profile-photo-lg">
+            {%endif%}
+          </div>
+          <div class="col-md-7 col-sm-7">
+            <h5><a href="/view_profile/{{i.username}}" class="profile-link">{{i.name}}</a></h5>
+            <p>{{i.username}}</p>
+            <p class="text-muted">Make this user your new friend</p>
+          </div>
+          <div class="col-md-3 col-sm-3">
+              {%ifequal i.email request.session.email_id%}
+              <a href="" class="btn btn-danger pull-right center">You</a>
+              {%else%}
+                {%if i.email in dictionary.kashi%}
+                <a href="" class="btn btn-danger pull-right center">Request Sent</a>
+                {%elif i.email in dictionary.mish%}
+                <a href="/view_profile/{{i.username}}" class="btn btn-success pull-right center">View Profile</a>
+                {%else%}
+                <a href="/make_friends/{{i.username}}/'1'" class="btn btn-primary pull-right center">Add friend</a>
+                {%endif%}
+              {%endifequal%}
+          </div>
+        </div>
+    </div>
+{% endfor %} 
+    </div>
+    
+</div>
+</div>
+</div>
+
+{%else%}
+<h4>bhaiya humare paas kuch naa h </h4>
+{%endif%}
+{%endblock%}

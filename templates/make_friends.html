@@ -1,0 +1,113 @@
+{%extends 'index.html'%}
+{% load static%}
+{%block content%}
+
+  <div class="container">
+    <form class="mx-0 my-auto d-inline w-100" action="/search_user" method="post">
+      {%csrf_token%}
+      <div class="input-group">
+         <input type="text" onkeyup="search_related_name()" id="zebra1" class="form-control" placeholder="Search post" name="search">
+          <span class="input-group-append">
+          <input type="submit" class="btn btn-outline-secondary btn-primary" value="Search">
+          </span>
+       </div>
+   </form>
+   <span id="search_list_name"></span>
+     
+        <div class="row">
+            
+                {%if dictionary.registration%}
+                <div class="col-md-8"></div>
+                <div class="people-nearby">
+                    {% for i in dictionary.registration %}
+                    {%  ifnotequal i.email request.session.email_id%}
+                  
+                  <div class="nearby-user">
+                    
+                    <div class="row">
+                        
+                      <div class="col-md-2 col-sm-2">
+                        {%if i.img%}
+                            <img src="/media/{{i.img}}" alt="user" height="100px" width="100%" class="profile-photo-lg">
+                        {%else%}
+                            <img src="/media/download.png" alt="hello" height="100px" width="100%" class="profile-photo-lg">
+                        {%endif%}
+                      </div>
+                      <div class="col-md-7 col-sm-7">
+                        <h5><a href="/view_profile/{{i.username}}" class="profile-link">{{i.name}}</a></h5>
+                        <p>{{i.username}}</p>
+                        <p class="text-muted">Make this user your new friend</p>
+                      </div>
+                      <div class="col-md-3 col-sm-3">
+                        {%if i.email in dictionary.kashi%}
+                          <a href="" class="btn btn-danger pull-right center">Request Sent</a>
+                        {%elif i.email in dictionary.mish%}
+                          <a href="/view_profile/{{i.username}}" class="btn btn-success pull-right center">View Profile</a>
+                        {%else%}
+                          <a href="/make_friends/{{i.username}}/'1'" class="btn btn-primary pull-right center">Add friend</a>
+                        {%endif%}
+                      </div>
+                    </div>
+                </div>
+                {%endifnotequal%}
+        {% endfor %} 
+                </div>
+                
+            </div>
+            {%else%}
+            <h4 class="text-center">No People present</h4>
+            {%endif%}
+        </div>
+        
+  
+
+    </div>
+<script type="text/javascript">
+function search_related_name()
+{
+  var b=document.getElementById("zebra1").value;
+  let csr=$("input[name=csrfmiddlewaretoken]").val();
+    output1="";
+    $.ajax({
+        type: "POST",
+        url: "/search_related_name",
+        data: { 
+            search_element: b, // < note use of 'this' here
+            csrfmiddlewaretoken:csr,
+        },
+        success: function(result) {
+          if(b!="")
+          {
+          var name1 = $.parseJSON(result.name);
+          if(name1.length==0)
+          {
+            output1="";
+            output1=output1+"<p href='#' class='list-group-item list-group-item-action border-1'>No Result Found</p>";
+            $('#search_list_name').html(output);
+          }
+          else
+          {
+          for(var i=0;i<name1.length;i++)
+          {
+            console.log(name1[i]['fields'].name)
+            output1=output1+"<a id='poo' class='list-group-item list-group-item-action border-1'>"+name1[i]['fields'].name+"</a>";
+          }
+          $('#search_list_name').html(output1);
+        }
+        }
+        else
+        {
+          $('#search_list_name').html("");
+        }
+
+
+    },
+
+    });
+    }
+    $(document).on('click','a',function(){
+      $('#zebra1').val($(this).text());
+      $('#search_list_name').html('');
+  });
+</script>
+{%endblock%}

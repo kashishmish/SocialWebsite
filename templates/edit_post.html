@@ -1,0 +1,77 @@
+{% extends 'index.html' %}
+{%load static%}
+{%block content%}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card-header text-center">Change Details</div>
+            <div class="card-body">
+                <form name="my-form" onsubmit="return validate()" action="/edit_post/{{post.id}}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group row">
+                        <label for="full_name" class="col-md-4 col-form-label text-md-right">Title</label>
+                        <div class="col-md-6">
+                            <input type="text" id="full_name" class="form-control" name="title"value="{{post.title}}">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="email_address" class="col-md-4 col-form-label text-md-right">Genre</label>
+                        <div class="col-md-6">
+                            <input type="text" id="email_address" class="form-control"value="{{post.genre}}" name="genre">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="user_name" class="col-md-4 col-form-label text-md-right">Description</label>
+                        <div class="col-md-6">
+                            <textarea rows="5" id="user_name" class="form-control"  name="description">{{post.description}}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="photo" class="col-md-4 col-form-label text-md-right">Post picture</label>
+                        <div class="col-md-6">
+                            <input type="file" id="photo" class="form-control" name="picture">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="photo" class="col-md-4 col-form-label text-md-right"></label>
+                  </div>
+
+
+                        <div class="col-md-6 offset-md-4">
+                            <button type="submit" class="btn btn-primary">
+                            Change Details
+                            </button>
+                        </div>
+                        <div class="col-md-6 offset-md-4">
+                            <a href="/delete_post/{{post.id}}" class="btn btn-primary">
+                            Delete Post
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        <div class="col-md-6">
+            <div class="card-header text-center">Post</div>
+            <div class="card">
+              {%if post.img%}
+                <img src="/media/{{post.img}}" alt="" height="400px" width="100%" class="">
+              {%else%}
+                <img src="/media/download.png" alt="hello" height="400px" width="100%" class="">
+              {%endif%}
+                <h1 class="text-center title">{{post.title}}</h1>
+                <i><h4 class="text-center">Username:{{post.username}}</h4>
+                <h4 class="text-center">Date:{{post.datetime}}</h4></i>
+                <h4 class="text-center">Genre:{{post.genre}}</h4></i>
+                <h4 class="text-center">Description:{{post.description}}</h4></i>
+              </div>
+        </div>
+    </div>
+
+
+  </div>
+
+{%endblock%}

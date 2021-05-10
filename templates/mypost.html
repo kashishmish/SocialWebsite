@@ -1,0 +1,60 @@
+{% extends 'index.html' %}
+{%load static%}
+{%block content%}
+<div class="container">
+    <div class="row">
+        {%if my_post%}
+        {%for i in my_post%}
+        <div class="col-md-8">
+            <!-- Profile widget -->
+                <div class="py-4 px-4">
+                    <h5 class="mb-0 text-center">All post</h5> </div>
+                    <ul class="list-inline mb-0">
+                        <li class="list-item mb">
+                            <h5 class=" mb-0 d-block">Name:{{i.username}}</h5>
+                        </li>
+                        <li class="list-item">
+                            <h5 class=" mb-0 d-block">Uploaded Time:{{i.datetime}}</h5>
+                        </li>
+                        <li class="list-item">
+                            <h5 class=" mb-0 d-block">Posts:</h5>
+                        </li>
+                    </ul>
+                    
+                        <span id="disp">
+                               <div class="card mdb-color bg-light text-center z-depth-2 shadow" >
+                                   <div class="card-body">
+                                     <div class="card-header">{{i.username}}</div><div class="card-header">{{i.genre}}</div>
+                                     <div class="card-title">{{i.title}}</div>
+                                     <img src="/media/{{i.img}}" alt="" height="300px" width="100%" >
+                                       <p class="white-text mb-0">{{i.description}}</p>
+                                       <a href="/edit_post/{{i.id}}"class="btn btn-danger">Edit Post</a>
+                                       {% if i.id in reacting.reacting1%}
+                <a href="/like/{{i.id}}/6"class="btn btn-success"><i class="fa fa-thumbs-up" style="font-size:16px"></i>{{i.like}}</a>
+                <a href="/dislike/{{i.id}}/6"class="btn btn-danger"><i class="fa fa-thumbs-o-down" style="font-size:16px"></i>{{i.dislike}}</a>
+              {% elif i.id in reacting.reacting2 %}
+              <a href="/like/{{i.id}}/6"class="btn btn-primary"><i class="fa fa-thumbs-o-up" style="font-size:16px"></i>{{i.like}}</a>
+            <a href="/dislike/{{i.id}}/6"class="btn btn-info"><i class="fa fa-thumbs-up" style="font-size:16px"></i>{{i.dislike}}</a>
+            {%else%}
+            <a href="/like/{{i.id}}/6"class="btn btn-primary"><i class="fa fa-thumbs-o-up" style="font-size:16px"></i>{{i.like}}</a>
+            <a href="/dislike/{{i.id}}/6"class="btn btn-danger"><i class="fa fa-thumbs-o-down" style="font-size:16px"></i>{{i.dislike}}</a>
+
+                                     {%endif%}
+                                     </div>
+                               </div>
+                        </span>
+                    <!-- <div class="row">
+                        <div class="col-lg-6 mb-2 pr-lg-1"><img src="https://images.unsplash.com/photo-1469594292607-7bd90f8d3ba4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt="" class="img-fluid rounded shadow-sm"></div>
+                        <div class="col-lg-6 mb-2 pl-lg-1"><img src="https://images.unsplash.com/photo-1493571716545-b559a19edd14?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt="" class="img-fluid rounded shadow-sm"></div>
+                        <div class="col-lg-6 pr-lg-1 mb-2"><img src="https://images.unsplash.com/photo-1453791052107-5c843da62d97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" alt="" class="img-fluid rounded shadow-sm"></div>
+                        <div class="col-lg-6 pl-lg-1"><img src="https://images.unsplash.com/photo-1475724017904-b712052c192a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt="" class="img-fluid rounded shadow-sm"></div>
+                    </div> -->
+                </div>
+                {%endfor%}
+                {%else%}
+                <h4>No Posts yet</h4>
+                {%endif%}
+            </div>
+        </div>
+
+{%endblock%}

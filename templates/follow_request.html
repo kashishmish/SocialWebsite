@@ -1,0 +1,48 @@
+{%extends 'index.html'%}
+{% load static%}
+{%block content%}
+  <div class="container">
+  
+
+            <div class="row">
+                        
+                            
+                <div class="col-md-12">
+                <div class="people-nearby">
+                    {%if d1%}
+                    {% for i,j in d1.items %}
+                    
+                
+                <div class="nearby-user">
+                    
+                    <div class="row">
+                        
+                    <div class="col-md-2 col-sm-2">
+                        {%if j.img%}
+                            <img src="/media/{{j.img}}" alt="user" height="100px" width="80%" class="profile-photo-lg">
+                        {%else%}
+                            <img src="/media/download.png" alt="hello" height="100px" width="80%" class="profile-photo-lg">
+                        {%endif%}
+                    </div>
+                    <div class="col-md-7 col-sm-7">
+                        <h5><a href="/view_profile/{{j.username}}" class="profile-link">{{j.name}}</a></h5>
+                        <p>{{j.username}}</p>
+                        <p class="text-muted">Make this user your new friend</p>
+                    </div>
+                    <div class="col-md-3 col-sm-3">
+                        <a href="confirm_request/{{j.username}}" class="btn btn-primary pull-right center">Confirm</a>
+                        <a href="delete_request/{{j.username}}/1" class="btn btn-primary pull-right center">Delete</a>
+                    </div>
+                    </div>
+                </div>
+                {%endfor%}
+                {%else%}
+                <h4>No people present </h4>
+                {%endif%}
+                </div>
+    
+</div>
+</div>
+
+</div>
+{%endblock%}
